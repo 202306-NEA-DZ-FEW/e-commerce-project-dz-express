@@ -1,6 +1,6 @@
 import Image from "next/image"
 import { API } from "@/util/API"
-import { CATEGORIES } from "@/constants"
+import { ALL_CART } from "@/constants"
 
 export default function Home({ products }) {
   return (
@@ -13,7 +13,7 @@ export default function Home({ products }) {
 }
 
 export async function getStaticProps() {
-  const data = await API(CATEGORIES)
+  const data = await API(ALL_CART)
   return {
     props: {
       products: data,
