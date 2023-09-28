@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react"
 import { collection, addDoc } from "firebase/firestore"
 import { db } from "@/util/firebase"
-import { SINGLE_PRODUCT } from "@/constants/index"
-import { API } from "@/util/API"
 
-function CartComponent({ products }) {
+function CartComponent({ data }) {
   const [dataProduct, setDataProduct] = useState({})
   const cartCollectionRef = collection(db, "cart")
 
+  {
+  }
   //console.log("Cart Component", products);
 
   const addCart = async (e) => {
     e.preventDefault()
     setDataProduct({})
-    await addDoc(cartCollectionRef, dataProduct)
+    await addDoc(cartCollectionRef, data[0])
   }
 
   return (
@@ -24,16 +24,12 @@ function CartComponent({ products }) {
         </h1>
         <div className="flex">
           <p className="text-white text-xl px-20 py-3 bg-orange-950 opacity-80 rounded-sm mx-4">
-            {" "}
+            {data[0].title}
           </p>
           <p className="text-white text-xl px-20 py-3 bg-orange-950 opacity-80 rounded-sm mx-4">
-            {" "}
-            Price{" "}
+            {data[0].price}
           </p>
-          <p className="text-white text-xl px-20 py-3 bg-orange-950 opacity-80 rounded-sm mx-4">
-            {" "}
-            Category{" "}
-          </p>
+          <p className="text-white text-xl px-20 py-3 bg-orange-950 opacity-80 rounded-sm mx-4"></p>
         </div>
 
         {/* <input 
@@ -52,13 +48,3 @@ function CartComponent({ products }) {
   )
 }
 export default CartComponent
-
-export async function getServerSideProps() {
-  const data = await API(SINGLE_PRODUCT)
-  console.log("First", data)
-  return {
-    props: {
-      products: data,
-    },
-  }
-}
