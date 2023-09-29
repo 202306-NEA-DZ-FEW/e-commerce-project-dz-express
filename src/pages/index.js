@@ -4,6 +4,7 @@ import Layout from "@/components/Layout"
 
 export default function Home({ products }) {
   return (
+
     <main className="flex flex-col min-h-screen">
       <Layout />
     </main>
