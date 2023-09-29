@@ -1,6 +1,6 @@
 function Footer() {
   return (
-    <footer className="mt-auto absolute w-full">
+    <footer className="h-1/5 w-9/12 mx-auto">
       <div className="flex flex-col bg-emerald-400 ">
         <div className="sb_footer section_padding p-16">
           <div className="flex justify-between items-start flex-row flex-wrap w-full text-left mb-8">
@@ -8,18 +8,20 @@ function Footer() {
               <h1>Dz-Express.</h1>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius
-                optio aliquid numquam a?{" "}
+                optio aliquid numquam a?
               </p>
             </div>
 
             {/* Created by */}
 
             <div className="w-30 m-1 flex justify-start flex-col text-white">
-              <p className="font-semibold tracking-wider py-1">CONTACT US</p>
+              <p className="font-semibold tracking-wider py-1 my-1">
+                CONTACT US
+              </p>
               <hr className="w-16"></hr>
               <a
                 href="https://github.com/Emybel"
-                className="flex flex-row items-center  text-gray-50 hover:text-gray-900 dark:hover:text-white"
+                className="flex flex-row items-center mt-3  text-gray-50 hover:text-gray-900 dark:hover:text-white"
               >
                 <svg
                   className="w-4 h-4 mx-2"
@@ -36,7 +38,7 @@ function Footer() {
                 </svg>
 
                 <span className="sr-only">GitHub account</span>
-                <p>IMANE BELAID</p>
+                <p>Imane BELAID</p>
               </a>
 
               <a
@@ -58,7 +60,7 @@ function Footer() {
                 </svg>
 
                 <span className="sr-only">GitHub account</span>
-                <p className="py-1">ACHRAF MEHANNECHE</p>
+                <p className="py-1">Fatima MERZOUK</p>
               </a>
 
               <a
@@ -80,7 +82,7 @@ function Footer() {
                 </svg>
 
                 <span className="sr-only">GitHub account</span>
-                <p className="py-1">ABDELHAMID SERHAN</p>
+                <p className="py-1">Achraf MEHANNECHE</p>
               </a>
 
               <a
@@ -102,7 +104,7 @@ function Footer() {
                 </svg>
 
                 <span className="sr-only">GitHub account</span>
-                <p className="py-1">SAMIRA TOUBAL</p>
+                <p className="py-1">Abdelhamid SERHAN</p>
               </a>
 
               <a
@@ -124,16 +126,16 @@ function Footer() {
                 </svg>
 
                 <span className="sr-only">GitHub account</span>
-                <p>MERZOUK FATIMA</p>
+                <p>Samira TOUBAL</p>
               </a>
             </div>
 
             {/* Our Products */}
 
-            <div className="w-40 m-1 flex justify-start flex-col text-white">
+            <div className="w-40 m-2 flex justify-start flex-col text-white">
               <p className="font-semibold tracking-wider py-1">OUR PRODUCTS</p>
               <hr className="w-16"></hr>
-              <a href="#" className="py-2 text-gray-50 no-underline">
+              <a href="#" className="py-2 mt-3 text-gray-50 no-underline">
                 <p>Men Clothing</p>
               </a>
               <a href="#" className="py-2 text-gray-50 no-underline">
