@@ -1,3 +1,5 @@
+import Logo from "../Nav/Logo"
+import Link from "next/link"
 function Footer() {
   return (
     <footer className="h-1/5 w-9/12 mx-auto">
@@ -5,8 +7,13 @@ function Footer() {
         <div className="sb_footer section_padding p-16">
           <div className="flex justify-between items-start flex-row flex-wrap w-full text-left mb-8">
             <div className="w-40 m-4 flex justify-start flex-col text-white">
-              <h1>Dz-Express.</h1>
-              <p>
+              <Link href="/">
+                <button className="font-bold text-4xl tracking-wide md:hover:tracking-widest transform-all ease-in-out duration-500 font-mono text-black z-50 uppercase">
+                  <span className="text-white mb-5">Dz</span>Express
+                  <span className="text-white mb-5">.</span>
+                </button>
+              </Link>
+              <p className="mt-10">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius
                 optio aliquid numquam a?
               </p>
@@ -104,7 +111,7 @@ function Footer() {
                 </svg>
 
                 <span className="sr-only">GitHub account</span>
-                <p className="py-1">Abdelhamid SERHAN</p>
+                <p className="py-1">Abdelhamid AHMIDAT</p>
               </a>
 
               <a
@@ -132,7 +139,7 @@ function Footer() {
 
             {/* Our Products */}
 
-            <div className="w-40 m-2 flex justify-start flex-col text-white">
+            <div className="w-40 m-2 flex justify-start flex-col text-white uppercase">
               <p className="font-semibold tracking-wider py-1">OUR PRODUCTS</p>
               <hr className="w-16"></hr>
               <a href="#" className="py-2 mt-3 text-gray-50 no-underline">
