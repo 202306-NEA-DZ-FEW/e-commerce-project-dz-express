@@ -1,4 +1,3 @@
-import Logo from "../Nav/Logo"
 import Link from "next/link"
 function Footer() {
   return (
