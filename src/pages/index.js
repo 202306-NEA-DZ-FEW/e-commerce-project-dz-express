@@ -1,21 +1,32 @@
 import { API } from "@/util/API"
-import { ALL_CART } from "@/constants"
-import Layout from "@/components/Layout"
+import { SINGLE_PRODUCT } from "@/constants"
+import ProductCard from "@/components/ProductCard/ProductCard"
+import HeroGrid from "@/components/Hero Grid/HeroGrid"
 
 export default function Home({ products }) {
+  console.log(products)
   return (
-
     <main className="flex flex-col min-h-screen">
-      <Layout />
+      <HeroGrid />
+      <ProductCard
+        id={products.id}
+        title={products.title}
+        price={products.price}
+        description={products.description}
+        category={products.category}
+        image={products.image}
+        rating={products.rating.rate}
+        count={products.rating.count}
+      />
     </main>
   )
 }
 
-// export async function getStaticProps() {
-//   const data = await API(ALL_CART)
-//   return {
-//     props: {
-//       products: data,
-//     },
-//   }
-// }
+export async function getStaticProps() {
+  const data = await API(SINGLE_PRODUCT)
+  return {
+    props: {
+      products: data,
+    },
+  }
+}
