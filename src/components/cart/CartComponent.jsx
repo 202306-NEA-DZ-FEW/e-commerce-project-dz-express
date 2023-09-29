@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth"
 import { collection, addDoc } from "firebase/firestore"
 import { db } from "@/util/firebase"
 
@@ -14,6 +15,21 @@ function CartComponent({ data }) {
     e.preventDefault()
     setDataProduct({})
     await addDoc(cartCollectionRef, data[0])
+
+    const auth = getAuth()
+    signInAnonymously(auth).then(() => {
+      console.log(auth)
+    })
+    // onAuthStateChanged(auth, (user) => {
+    //   if (user) {
+    //     // User is signed in, see docs for a list of available properties
+    //     // https://firebase.google.com/docs/reference/js/auth.user
+    //     const uid = user.uid;
+    //     // ...
+    //   } else {
+    //     // User is signed out
+    //     // ...
+    //   }
   }
 
   return (
