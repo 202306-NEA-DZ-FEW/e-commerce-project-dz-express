@@ -4,7 +4,6 @@ import ProductCard from "@/components/ProductCard/ProductCard"
 import HeroGrid from "@/components/Hero Grid/HeroGrid"
 
 export default function Home({ products }) {
-  console.log(products)
   return (
     <main className="flex flex-col min-h-screen">
       <HeroGrid />
