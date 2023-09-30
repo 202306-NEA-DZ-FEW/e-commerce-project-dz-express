@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 
-function ProductCard({ image, title, price, rate }) {
+function ProductCard({ title, price, image, category, rating, count }) {
   return (
     <div className="w-full mx-auto max-w-sm bg-white border border-gray-200 rounded-lg shadow-green-200 mb-4">
       <Link className="block h-64" href="#">
@@ -62,7 +62,7 @@ function ProductCard({ image, title, price, rate }) {
           </svg>
           {/* <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
                             {/* Replace this with Rating and communt it to see the card */}
-          {/* {product.rate.rating}  {product.rate.count} */}
+          {/* {rating}  {count} */}
           {/* </span> */}
         </div>
         <div className="flex items-center justify-between">
