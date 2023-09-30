@@ -4,10 +4,13 @@ import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import Logo from "./Logo"
 import MobileMenu from "./MobileMenu"
+import { ALL_PRODUCTS } from "@/constants"
+import { useRouter } from "next/router"
 
 function Nav() {
   const [showInput, setShowInput] = useState(false)
   const inputRef = useRef()
+
   function handleToggleInput() {
     setShowInput((prevState) => !prevState)
   }
@@ -16,9 +19,9 @@ function Nav() {
     inputRef.current.focus()
   }, [showInput])
   return (
-    <navbar className="navbar mb-2  bg-gradient-to-b  sticky top-0 z-50 backdrop-blur-md">
+    <navbar className="navbar   bg-gradient-to-b  sticky top-0 z-50 backdrop-blur-md">
       <MobileMenu />
-      <div className="px-2 mx-2 flex-1 gap-2 justify-center lg:justify-start">
+      <div className="lg:px-2 mx-2 flex-1 gap-2 justify-end lg:justify-start">
         <Logo className="text-center" />
       </div>
       <div className="lg:flex-1 px-2 mx-2 justify-center">
@@ -60,14 +63,16 @@ function Nav() {
       </div>
       <div className="flex-1 justify-end">
         <div className="form-control">
-          <input
-            ref={inputRef}
-            type="text"
-            placeholder="Search"
-            className={`input input-ghost input-sm transition-all duration-300 ${
-              showInput ? "block" : "hidden"
-            }`}
-          />
+          <form>
+            <input
+              ref={inputRef}
+              type="text"
+              placeholder="You are shopping for..."
+              className={`input input-ghost input-sm transition-all duration-300 ${
+                showInput ? "block" : "hidden"
+              }`}
+            />
+          </form>
         </div>
         <button
           onClick={handleToggleInput}
@@ -86,3 +91,11 @@ function Nav() {
 }
 
 export default Nav
+export async function getStaticProps() {
+  const data = await API(ALL_PRODUCTS)
+  return {
+    props: {
+      products: data,
+    },
+  }
+}

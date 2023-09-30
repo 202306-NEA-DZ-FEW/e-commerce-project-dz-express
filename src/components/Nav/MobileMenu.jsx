@@ -5,24 +5,17 @@ import { FiMenu } from "react-icons/fi"
 import Link from "next/link"
 const MobileMenu = () => {
   const [showMenu, setShowMenu] = useState(false)
-  function handleOpenMenu() {
-    setShowMenu(true)
+  function handleToggleMenu() {
+    setShowMenu(!showMenu)
   }
-  function handleCloseMenu() {
-    setShowMenu(false)
-  }
+
   return (
     <div>
       <div
         className={`${
           showMenu ? "block" : "hidden"
-        } flex flex-col gap-10 justify-center absolute h-[100vh] w-[100%] overflow-x-hidden top-0 right-0 bg-neutral text-neutral-content`}
+        } flex flex-col gap-10 justify-start absolute h-[100vh] w-[100%] overflow-x-hidden top-20 right-0 bg-neutral text-neutral-content`}
       >
-        <div className="w-full text-center">
-          <button onClick={handleCloseMenu} className="btn btn-ghost btn-sm">
-            <AiOutlineClose className="text-2xl" />
-          </button>
-        </div>
         <Link href="/" className="btn btn-ghost btn-sm p-10">
           Home
         </Link>
@@ -38,10 +31,14 @@ const MobileMenu = () => {
       </div>
       <div className="px-2 mx-2 lg:hidden flex-1 gap-2 ">
         <button
-          onClick={handleOpenMenu}
+          onClick={handleToggleMenu}
           className="btn btn-ghost btn-sm btn-square "
         >
-          <FiMenu className="text-2xl" />
+          {showMenu ? (
+            <AiOutlineClose className="text-2xl" />
+          ) : (
+            <FiMenu className="text-2xl" />
+          )}
         </button>
       </div>
     </div>
