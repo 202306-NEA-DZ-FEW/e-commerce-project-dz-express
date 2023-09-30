@@ -1,7 +1,9 @@
 import { API } from "@/util/API"
 import { ALL_PRODUCTS, CATEGORIES, SINGLE_PRODUCT } from "@/constants"
 import ProductCard from "@/components/ProductCard/ProductCard"
+
 import HeroGrid from "@/components/Hero Grid/HeroGrid"
+import ProductListCard from "@/components/ProductCardList/ProductListCard"
 
 export default function Home({ categories, categoryObjects }) {
   return (
