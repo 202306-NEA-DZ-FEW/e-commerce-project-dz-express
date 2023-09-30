@@ -1,14 +1,13 @@
 import Image from "next/image"
 import Link from "next/link"
 
-function ProductCard({ product }) {
-  console.log(product)
+function ProductCard({ image, title, price, rate }) {
   return (
     <div className="w-full mx-auto max-w-sm bg-white border border-gray-200 rounded-lg shadow-green-200 mb-4">
       <Link className="block h-64" href="#">
         <Image
           className="p-8 rounded-t-lg max-h-64 max-w-64 w-auto mx-auto"
-          src={product.image}
+          src={image}
           alt="Product"
           width={100}
           height={100}
@@ -17,7 +16,7 @@ function ProductCard({ product }) {
       <div className="px-5 pb-5 flex flex-col justify-between bg-white">
         <Link href="#">
           <h3 className="text-gray-900 font-semibold text-l tracking-tight dark:text-gray-900">
-            {product.title}
+            {title}
           </h3>
         </Link>
         <div className="flex items-center mt-2.5 mb-5">
@@ -69,7 +68,7 @@ function ProductCard({ product }) {
         <div className="flex items-center justify-between">
           <span className="text-3xl font-bold text-gray-900 dark:text-gray-900">
             {/* Replace this with Price and communt it to see the card */}$
-            {product.price}
+            {price}
           </span>
           <button className="bg-emerald-400 hover:bg-emerald-700 text-white font-bold py-2 px-2">
             {" "}
