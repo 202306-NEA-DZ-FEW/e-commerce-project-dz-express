@@ -1,26 +1,22 @@
 import React, { useState } from "react"
 
-const Filter = () => {
+const Filter = ({ categories, defaultCategory }) => {
   const [buttonClicked, setButtonClicked] = useState(false)
   const handleButtonClick = () => {
     setButtonClicked(!buttonClicked)
   }
-  const [category, setCategory] = useState([])
+
+  const [selectedCategory, setSelectedCategory] = useState(defaultCategory)
+
+  const handleCategoryChange = (cat) => {
+    setSelectedCategory(cat)
+  }
+
   const [priceFrom, setPriceFrom] = useState("")
   const [priceTo, setPriceTo] = useState("")
   const [rating, setRating] = useState(null)
-  const categories = [
-    "electronics",
-    "jewelry",
-    "men's clothing",
-    "women's clothing",
-  ]
   const priceRanges = [50, 100, 150, 200]
   const starRatings = [5, 4, 3, 2, 1]
-  const handleCategoryChange = (event) => {
-    // Handle category checkbox changes here
-    setCategory(event.target)
-  }
 
   const handlePriceFromChange = (event) => {
     // Handle price "from" select changes here
@@ -34,13 +30,17 @@ const Filter = () => {
     // Handle rating radio button changes here
     setRating(value)
   }
+  const handleCheckboxChange = (event) => {
+    setIsChecked(!isChecked)
+  }
+
   return (
     <div className="flex flex-col items-center justify-center p-4">
       <button
         onClick={handleButtonClick}
         id="dropdownDefault"
         data-dropdown-toggle="dropdown"
-        className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+        className="bg-primary-700 border-2 border border-black font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
         type="button"
       >
         <span className="hidden lg:inline">Filters</span>
@@ -79,9 +79,11 @@ const Filter = () => {
                       <div key={cat}>
                         <label className="inline-flex items-center">
                           <input
-                            type="checkbox"
+                            type="radio"
+                            id={cat}
                             className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
-                            onChange={handleCategoryChange}
+                            onChange={() => handleCategoryChange(cat)}
+                            checked={selectedCategory === cat} // Check if this category is selected
                           />
                           <span className="ml-2 text-gray-700">{cat}</span>
                         </label>
@@ -98,7 +100,7 @@ const Filter = () => {
                       <select
                         onChange={handlePriceFromChange}
                         value={priceFrom}
-                        className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                        className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-2 border border-black sm:text-sm rounded-md"
                       >
                         <option value="">From</option>
                         {priceRanges.map((range) => (
@@ -110,7 +112,7 @@ const Filter = () => {
                       <select
                         onChange={handlePriceToChange}
                         value={priceTo}
-                        className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                        className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-2 border border-black sm:text-sm rounded-md"
                       >
                         <option value="">To</option>
                         {priceRanges.map((range) => (
