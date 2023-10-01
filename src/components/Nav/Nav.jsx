@@ -4,8 +4,10 @@ import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import Logo from "./Logo"
 import MobileMenu from "./MobileMenu"
+import { useCategory } from "@/context/CategoryContext"
 
 function Nav() {
+  const { defaultCategory, setDefaultCategory } = useCategory()
   const [showInput, setShowInput] = useState(false)
   const inputRef = useRef()
   function handleToggleInput() {
@@ -18,16 +20,26 @@ function Nav() {
   return (
     <navbar className="navbar mb-2  bg-gradient-to-b  sticky top-0 z-50 backdrop-blur-md">
       <MobileMenu />
-      <div className="px-2 mx-2 flex-1 gap-2 justify-center lg:justify-start">
+      <div
+        onClick={() => setDefaultCategory("")}
+        className="px-2 mx-2 flex-1 gap-2 justify-center lg:justify-start"
+      >
         <Logo className="text-center" />
       </div>
       <div className="lg:flex-1 px-2 mx-2 justify-center">
-        <div className="items-stretch hidden lg:flex lg:space-x-4">
+        <div
+          onClick={() => setDefaultCategory("")}
+          className="items-stretch hidden lg:flex lg:space-x-4"
+        >
           <Link href="/" className="btn btn-ghost btn-sm rounded-btn">
             Home
           </Link>
-          <Link href="/products" className="btn btn-ghost btn-sm rounded-btn">
-            All Products
+          <Link
+            onClick={() => setDefaultCategory("")}
+            href="/products"
+            className="btn btn-ghost btn-sm rounded-btn"
+          >
+            Products
           </Link>
           <Link
             href="/Categories"

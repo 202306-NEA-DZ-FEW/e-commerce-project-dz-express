@@ -1,80 +1,80 @@
 import Image from "next/image"
+import { useState, useEffect } from "react"
+import { useCart } from "@/context/CartContext"
+import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth"
+import { collection, addDoc } from "firebase/firestore"
+import { db } from "@/util/firebase"
 import Link from "next/link"
 
-function ProductCard({ title, price, image, category, rating, count }) {
+function ProductCard(product) {
+  const { cart, setCart } = useCart()
+  const cartCollectionRef = collection(db, "cart")
+  const quantity = 1
+  const handleAddToCart = async () => {
+    const updatedCart = [...cart, { product, quantity }]
+    setCart(updatedCart)
+    console.log("Updated Cart:", updatedCart)
+    await addDoc(cartCollectionRef, { product, quantity })
+  }
   return (
-    <div className="w-full mx-auto max-w-sm bg-white border border-gray-200 rounded-lg shadow-green-200 mb-4">
-      <Link className="block h-64" href="#">
-        <Image
-          className="p-8 rounded-t-lg max-h-64 max-w-64 w-auto mx-auto"
-          src={image}
-          alt="Product"
-          width={100}
-          height={100}
-        ></Image>
-      </Link>
-      <div className="px-5 pb-5 flex flex-col justify-between bg-white">
-        <Link href="#">
-          <h3 className="text-gray-900 font-semibold text-l tracking-tight dark:text-gray-900">
-            {title}
-          </h3>
-        </Link>
-        <div className="flex items-center mt-2.5 mb-5">
-          <svg
-            className="w-5 h-5 text-yellow-300"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-          </svg>
-          <svg
-            className="w-5 h-5 text-yellow-300"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-          </svg>
-          <svg
-            className="w-5 h-5 text-yellow-300"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-          </svg>
-          <svg
-            className="w-5 h-5 text-yellow-300"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-          </svg>
-          <svg
-            className="w-5 h-5 text-yellow-300"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-          </svg>
-          {/* <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
-                            {/* Replace this with Rating and communt it to see the card */}
-          {/* {rating}  {count} */}
-          {/* </span> */}
+    <div className="text-center transform duration-500 hover:-translate-y-2 cursor-pointer w-full mx-auto max-w-sm bg-white border border-gray-200 rounded-lg shadow-green-200 mb-4">
+      <div className="p-8 rounded-t-lg max-w-64 w-auto mx-auto">
+        <div className="w-full h-48 flex items-center justify-center">
+          <Image
+            src={product.image}
+            alt="Product"
+            width={100} // Adjust the width to maintain the aspect ratio
+            height={100} // Adjust the height to maintain the aspect ratio
+          />
         </div>
-        <div className="flex items-center justify-between">
-          <span className="text-3xl font-bold text-gray-900 dark:text-gray-900">
-            {/* Replace this with Price and communt it to see the card */}$
-            {price}
+      </div>
+      <div
+        className="px-5 pb-5 flex flex-col justify-between bg-white"
+        style={{
+          maxHeight: "300px", // Adjust this height to limit the card height
+          overflow: "hidden",
+        }}
+      >
+        <h3 className="text-gray-900 font-semibold text-l tracking-tight dark:text-gray-900 overflow-hidden truncate">
+          {product.title}
+        </h3>
+        <div className="flex mb-4 mt-4 justify-center">
+          <span className="flex items-center">
+            {[...Array(5)].map((_, index) => (
+              <svg
+                key={index}
+                fill={
+                  index < Math.floor(product.rating.rate)
+                    ? "currentColor"
+                    : "none"
+                }
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                className={`w-4 h-4 ${
+                  index < Math.floor(product.rating.rate) ||
+                  (index === Math.floor(product.rating.rate) &&
+                    product.rating.rate % 1 > 0)
+                    ? "text-emerald-400"
+                    : "text-emerald-400"
+                }`}
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+            ))}
           </span>
-          <button className="bg-emerald-400 hover:bg-emerald-700 text-white font-bold py-2 px-2">
-            {" "}
-            Add to Cart
-          </button>
         </div>
+
+        <h2 className="font-semibold mb-5">${product.price}</h2>
+
+        <button
+          onClick={handleAddToCart}
+          className={`p-2 px-6 bg-emerald-500 text-white rounded-md hover:bg-emerald-600`}
+        >
+          Add To Cart
+        </button>
       </div>
     </div>
   )
