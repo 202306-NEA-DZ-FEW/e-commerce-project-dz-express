@@ -11,7 +11,9 @@ export default function Home({ categories, categoryObjects }) {
       <div className="grid lg:grid-cols-4 grid-cols-1 gap-4">
         {categoryObjects.map((categoryObj) => (
           <div key={categoryObj.category} className="col-span-4">
-            <h2 className="text-xl font-bold">{categoryObj.category}</h2>
+            <div className="mb-8 backdrop-blur py-2 px-4 text-white font-mono uppercase bg-gradient-to-r from-emerald-700 to-white">
+              <h2 className="text-2xl font-bold">{categoryObj.category}</h2>
+            </div>
             <div className="grid grid-cols-3 gap-4">
               {categoryObj.products.map((product) => (
                 <div key={product.id} className="col-span-1">
