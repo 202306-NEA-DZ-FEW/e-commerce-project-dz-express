@@ -7,7 +7,7 @@ export function useCategory() {
 }
 
 export function CategoryProvider({ children }) {
-  const [defaultCategory, setDefaultCategory] = useState([])
+  const [defaultCategory, setDefaultCategory] = useState("")
 
   return (
     <CategoryContext.Provider value={{ defaultCategory, setDefaultCategory }}>
