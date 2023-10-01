@@ -1,6 +1,18 @@
 import Image from "next/image"
-
+import { useState } from "react"
 function ProductCard({ title, price, image, rating }) {
+  const addCart = async (e) => {
+    e.preventDefault()
+    setDataProduct({
+      ...products,
+    })
+    await addDoc(cartCollectionRef, products[products.id])
+
+    // const auth = getAuth()
+    // signInAnonymously(auth).then(() => {
+    //   console.log(auth)
+    // })
+  }
   return (
     <div className="text-center transform duration-500 hover:-translate-y-2 cursor-pointer w-full mx-auto max-w-sm bg-white border border-gray-200 rounded-lg shadow-green-200 mb-4">
       <div className="p-8 rounded-t-lg max-w-64 w-auto mx-auto">
