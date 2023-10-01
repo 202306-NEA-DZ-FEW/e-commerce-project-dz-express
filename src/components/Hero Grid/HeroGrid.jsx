@@ -4,18 +4,6 @@ import { CATEGORIES } from "@/constants"
 import Link from "next/link"
 
 export default function HeroGrid(categories) {
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = await API(CATEGORIES)
-        setCategories(data)
-      } catch (error) {
-        console.error("Error fetching data:", error)
-      }
-    }
-    fetchData()
-  }, [])
-
   return (
     <div className="min-h-screen p-8 lg:p-16 grid grid-cols-1 grid-rows-5 gap-4 h-full w-full lg:grid-cols-7 lg:grid-rows-3">
       <div className="hero lg:col-span-7 bg-mint">
