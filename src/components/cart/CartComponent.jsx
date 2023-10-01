@@ -12,22 +12,6 @@
 //     setDataProduct({})
 //     await addDoc(cartCollectionRef, data[0])
 
-//     const auth = getAuth()
-//     signInAnonymously(auth).then(() => {
-//       console.log(auth)
-//     })
-//     // onAuthStateChanged(auth, (user) => {
-//     //   if (user) {
-//     //     // User is signed in, see docs for a list of available properties
-//     //     // https://firebase.google.com/docs/reference/js/auth.user
-//     //     const uid = user.uid;
-//     //     // ...
-//     //   } else {
-//     //     // User is signed out
-//     //     // ...
-//     //   }
-//   }
-
 //   return (
 //     <main className="h-full">
 //       <div className="w-500 h-full p-50 bg-orange-400 flex flex-col justify-center items-center rounded shadow-orange-800  ">
@@ -63,40 +47,24 @@
 
 import React, { useEffect, useState } from "react"
 import Image from "next/image"
-import { API } from "@/util/API"
-import { SINGLE_PRODUCT } from "@/constants"
-import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth"
-import { collection, addDoc } from "firebase/firestore"
-import { db } from "@/util/firebase"
+import { useCart } from "@/context/CartContext"
 
-const CartComponent = ({ products }) => {
-  const [dataProduct, setDataProduct] = useState({})
-  //   const cartCollectionRef = collection(db, "cart")
-
-  //   const addCart = async (e) => {
-  //     e.preventDefault()
-  //     setDataProduct({})
-  //     await addDoc(cartCollectionRef, data[0])
-
-  //     const auth = getAuth()
-  //     signInAnonymously(auth).then(() => {
-  //       console.log(auth)
-  //     })
-  //   }
-  // // Define the quantity state and initialize it to 1
+const CartComponent = ({ products, cartItems }) => {
+  const { cart, setCart } = useCart()
   const [quantity, setQuantity] = useState(1)
-
-  // Calculate subtotal, taxes, and total based on productPrice and quantity
-  const subtotal = products.price * quantity
-  const taxes = subtotal * 0.19 // Assuming 19% tax
+  const subtotal = products.reduce(
+    (acc, item) => acc + item.data.product.price * item.data.quantity,
+    0,
+  )
+  console.log("subtotal", subtotal)
+  const taxes = subtotal * 0.19
   const total = subtotal + taxes
+  useEffect(() => {}, [products])
 
-  // Function to increment quantity
   const incrementQuantity = () => {
     setQuantity(quantity + 1)
   }
 
-  // Function to decrement quantity
   const decrementQuantity = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1)
@@ -107,57 +75,70 @@ const CartComponent = ({ products }) => {
     <div className="bg-gray-100 h-screen py-8">
       <div className="container mx-auto px-4">
         <h1 className="text-2xl font-semibold mb-4">Shopping Cart</h1>
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="md:w-3/4">
-            <div className="bg-white rounded-lg shadow-md p-6 mb-4">
-              <table className="w-full">
-                <thead>
-                  <tr>
-                    <th className="text-left font-semibold">Product</th>
-                    <th className="text-left font-semibold">Price</th>
-                    <th className="text-left font-semibold">Quantity</th>
-                    <th className="text-left font-semibold">Total</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td className="py-4">
-                      <div className="flex items-center">
-                        <Image
-                          className="h-16 w-16 mr-4"
-                          src={products.image}
-                          alt="Product image"
-                          width={100}
-                          height={100}
-                        />
+        <div className="flex ">
+          <div className="flex flex-col w-full gap-4">
+            {products.map((product) => (
+              <div key={product.id} className="md:w-3/4">
+                <div className="bg-white rounded-lg shadow-md p-6 mb-4">
+                  <table className="w-full">
+                    <thead>
+                      <tr>
+                        <th className="text-left font-semibold">Product</th>
+                        <th className="text-left font-semibold">Price</th>
+                        <th className="text-left font-semibold">Quantity</th>
+                        <th className="text-left font-semibold">Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className="py-4">
+                          <div className="flex items-center">
+                            <Image
+                              className="h-16 w-16 mr-4"
+                              src={product.data.product.image}
+                              alt="Product image"
+                              width={100}
+                              height={100}
+                            />
 
-                        <span className="font-semibold">{products.title}</span>
-                      </div>
-                    </td>
-                    <td className="py-4">${products.price.toFixed(2)}</td>
-                    <td className="py-4">
-                      <div className="flex items-center">
-                        <button
-                          onClick={decrementQuantity}
-                          className="border rounded-md py-2 px-4 mr-2"
-                        >
-                          -
-                        </button>
-                        <span className="text-center w-8">{quantity}</span>
-                        <button
-                          onClick={incrementQuantity}
-                          className="border rounded-md py-2 px-4 ml-2"
-                        >
-                          +
-                        </button>
-                      </div>
-                    </td>
-                    <td className="py-4">${subtotal.toFixed(2)}</td>
-                  </tr>
-                  {/* More product rows */}
-                </tbody>
-              </table>
-            </div>
+                            <span className="font-semibold">
+                              {product.title}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="py-4">
+                          ${product.data.product.price.toFixed(2)}
+                        </td>
+                        <td className="py-4">
+                          <div className="flex items-center">
+                            <button
+                              onClick={decrementQuantity}
+                              className="border rounded-md py-2 px-4 mr-2"
+                            >
+                              -
+                            </button>
+                            <span className="text-center w-8">
+                              {product.data.quantity}
+                            </span>
+                            <button
+                              onClick={incrementQuantity}
+                              className="border rounded-md py-2 px-4 ml-2"
+                            >
+                              +
+                            </button>
+                          </div>
+                        </td>
+                        <td>
+                          $
+                          {product.data.quantity *
+                            product.data.product.price.toFixed(2)}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            ))}
           </div>
           <div className="md:w-1/4">
             <div className="bg-white rounded-lg shadow-md p-6">
@@ -194,13 +175,3 @@ const CartComponent = ({ products }) => {
 }
 
 export default CartComponent
-
-// export async function getServerSideProps() {
-//   const data = await API(SINGLE_PRODUCT)
-
-//   return {
-//     props: {
-//       products: data,
-//     },
-//   }
-// }

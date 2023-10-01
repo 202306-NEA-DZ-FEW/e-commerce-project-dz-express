@@ -1,8 +1,13 @@
 import { SINGLE_PRODUCT } from "@/constants"
+import { useCart } from "@/context/CartContext"
 import { API } from "@/util/API"
 import React from "react"
 import { useState } from "react"
+import { collection, addDoc } from "firebase/firestore"
+import { db } from "@/util/firebase"
 const SingleProduct = ({ product }) => {
+  const cartCollectionRef = collection(db, "cart")
+  const { cart, setCart } = useCart()
   const [quantity, setQuantity] = useState(1)
   const incrementQuantity = () => {
     setQuantity(quantity + 1)
@@ -13,6 +18,14 @@ const SingleProduct = ({ product }) => {
       setQuantity(quantity - 1)
     }
   }
+
+  const handleAddToCart = async () => {
+    const updatedCart = [...cart, { product, quantity }]
+    setCart(updatedCart)
+    console.log("Updated Cart:", updatedCart)
+    await addDoc(cartCollectionRef, { product, quantity })
+  }
+
   return (
     <section className="text-gray-700 body-font overflow-hidden bg-white">
       <div className="container px-5 py-24 mx-auto">
@@ -83,7 +96,10 @@ const SingleProduct = ({ product }) => {
               <span className="title-font font-medium text-2xl text-gray-900">
                 ${product.price}
               </span>
-              <button className="flex ml-auto text-white bg-emerald-400 border-0 py-2 px-6 focus:outline-none hover:bg-emerald-600 rounded">
+              <button
+                onClick={handleAddToCart}
+                className="flex ml-auto text-white bg-emerald-400 border-0 py-2 px-6 focus:outline-none hover:bg-emerald-600 rounded"
+              >
                 Add to Cart
               </button>
             </div>

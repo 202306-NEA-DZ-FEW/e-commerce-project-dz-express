@@ -32,7 +32,7 @@ export async function getStaticProps() {
     const matchingProducts = products.filter(
       (product) => product.category === category,
     )
-    const limitedProducts = matchingProducts.slice(0, 3) // Get the first 3 matching products
+    const limitedProducts = matchingProducts.slice(0, 3)
 
     return {
       category: category,
