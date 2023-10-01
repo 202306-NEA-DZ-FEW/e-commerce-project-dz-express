@@ -1,62 +1,16 @@
-// import React, { useEffect, useState } from "react"
-// import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth"
-// import { collection, addDoc } from "firebase/firestore"
-// import { db } from "@/util/firebase"
-
-// function CartComponent({ data }) {
-//   const [dataProduct, setDataProduct] = useState({})
-//   const cartCollectionRef = collection(db, "cart")
-
-//   const addCart = async (e) => {
-//     e.preventDefault()
-//     setDataProduct({})
-//     await addDoc(cartCollectionRef, data[0])
-
-//   return (
-//     <main className="h-full">
-//       <div className="w-500 h-full p-50 bg-orange-400 flex flex-col justify-center items-center rounded shadow-orange-800  ">
-//         <h1 className="text-white text-2xl py-5 font-bold">
-//           Add Data to Cart:
-//         </h1>
-//         <div className="flex">
-//           <p className="text-white text-xl px-20 py-3 bg-orange-950 opacity-80 rounded-sm mx-4">
-//             {data[0].title}
-//           </p>
-//           <p className="text-white text-xl px-20 py-3 bg-orange-950 opacity-80 rounded-sm mx-4">
-//             {data[0].price}
-//           </p>
-//           <p className="text-white text-xl px-20 py-3 bg-orange-950 opacity-80 rounded-sm mx-4"></p>
-//         </div>
-
-//         {/* <input
-//           onChange={(e) =>setData({name : e.target.value})}
-//           type='text'
-//           placeholder='Add a cart...'
-//           className="text-black border border-gray-300 p-2 my-10 rounded-md focus:outline-none focus:border-orange-700"/> */}
-//         <button
-//           onClick={addCart}
-//           className="mb-50 bg-white hover:bg-orange-100 text-orange-700 font-semibold hover:text-orange-700 py-2 px-4 border border-orange-500 hover:border-transparent rounded"
-//         >
-//           Button
-//         </button>
-//       </div>
-//     </main>
-//   )
-// }
-// export default CartComponent
-
 import React, { useEffect, useState } from "react"
 import Image from "next/image"
 import { useCart } from "@/context/CartContext"
+import { collection, addDoc } from "firebase/firestore"
+import { db } from "@/util/firebase"
 
-const CartComponent = ({ products, cartItems }) => {
-  const { cart, setCart } = useCart()
+const CartComponent = ({ products }) => {
+  const [productsArray, setProductsArray] = useState(products)
   const [quantity, setQuantity] = useState(1)
   const subtotal = products.reduce(
     (acc, item) => acc + item.data.product.price * item.data.quantity,
     0,
   )
-  console.log("subtotal", subtotal)
   const taxes = subtotal * 0.19
   const total = subtotal + taxes
   useEffect(() => {}, [products])
@@ -70,15 +24,33 @@ const CartComponent = ({ products, cartItems }) => {
       setQuantity(quantity - 1)
     }
   }
+  const removeCartItem = (id) => {
+    const updatedProducts = productsArray.filter((product) => {
+      console.log(product.data.product.id, "id", id)
+      return product.data.product.id !== id
+    })
+    setProductsArray(updatedProducts)
+  }
 
+  const handleDeleteCartItem = () => {
+    db.collection("cart")
+      .doc(cartItemId)
+      .delete()
+      .then(() => {
+        console.log("Cart item deleted successfully.")
+      })
+      .catch((error) => {
+        console.error("Error deleting cart item:", error)
+      })
+  }
   return (
     <div className="bg-gray-100 h-screen py-8">
       <div className="container mx-auto px-4">
         <h1 className="text-2xl font-semibold mb-4">Shopping Cart</h1>
         <div className="flex ">
           <div className="flex flex-col w-full gap-4">
-            {products.map((product) => (
-              <div key={product.id} className="md:w-3/4">
+            {productsArray.map((product) => (
+              <div key={product.data.product.id} className="md:w-3/4">
                 <div className="bg-white rounded-lg shadow-md p-6 mb-4">
                   <table className="w-full">
                     <thead>
@@ -87,6 +59,16 @@ const CartComponent = ({ products, cartItems }) => {
                         <th className="text-left font-semibold">Price</th>
                         <th className="text-left font-semibold">Quantity</th>
                         <th className="text-left font-semibold">Total</th>
+                        <th>
+                          <button
+                            onClick={() =>
+                              removeCartItem(product.data.product.id)
+                            }
+                            className="text-black-500 p-2 text-bold"
+                          >
+                            X
+                          </button>
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
