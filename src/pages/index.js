@@ -1,22 +1,26 @@
-import Image from "next/image"
 import { API } from "@/util/API"
-import { ALL_CART } from "@/constants"
+import { ALL_PRODUCTS } from "@/constants"
+import HeroGrid from "@/components/Hero Grid/HeroGrid"
+import ProductListCard from "@/components/ProductCardList/ProductListCard"
 
 export default function Home({ products }) {
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24`}
-    >
-      {JSON.stringify(products)}
+    <main className="flex flex-col min-h-screen">
+      <HeroGrid />
+      <h1>Jewelery</h1>
+      <ProductListCard products={products} />
+      <h1>Jewelery</h1>
+      <ProductListCard products={products} />
     </main>
   )
 }
 
 export async function getStaticProps() {
-  const data = await API(ALL_CART)
+  const data = await API(ALL_PRODUCTS)
+  const products = data.map((product) => product.category === "jewelery")
   return {
     props: {
-      products: data,
+      products: products.slice(0, 3),
     },
   }
 }
