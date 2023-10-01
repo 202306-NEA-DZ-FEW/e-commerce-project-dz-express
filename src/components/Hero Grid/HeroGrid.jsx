@@ -14,7 +14,7 @@ export default function HeroGrid(categories) {
         </Link>
       </div>
       <div className="hero lg:col-span-5 lg:row-start-2 bg-tiffany-blue">
-        <Link href={`/products}`}>
+        <Link href={`/products`}>
           {" "}
           <div className="hero-content text-center font-bold text-2xl font-mono text-black">
             {categories[0]}
@@ -23,7 +23,7 @@ export default function HeroGrid(categories) {
       </div>
 
       <div className="hero lg:col-span-2 lg:col-start-6 lg:row-start-2 bg-mint-green">
-        <Link href={`/products}`}>
+        <Link href={`/products`}>
           <div className="hero-content text-center font-bold text-2xl font-mono text-black">
             {categories[1]}
           </div>
@@ -31,7 +31,7 @@ export default function HeroGrid(categories) {
       </div>
 
       <div className="hero lg:col-span-3 lg:row-start-3 bg-mint-cream">
-        <Link href={`/products}`}>
+        <Link href={`/products`}>
           <div className="hero-content text-center font-bold text-2xl font-mono text-black">
             {categories[2]}
           </div>
@@ -39,7 +39,7 @@ export default function HeroGrid(categories) {
       </div>
 
       <div className="hero lg:col-span-4 lg:col-start-4 lg:row-start-3 bg-zomp">
-        <Link href={`/products}`}>
+        <Link href={`/products`}>
           {" "}
           <div className="hero-content text-center font-bold text-2xl font-mono text-black">
             {categories[3]}
