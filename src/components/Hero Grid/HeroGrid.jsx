@@ -26,10 +26,13 @@ export default function HeroGrid(categories) {
               Explore Fashion, Electronics, and Jewelry - Your One-Stop
               E-commerce Destination!
             </p>
-            <button className="btn btn-primary">Check All here!</button>
+            <Link href={`/products`}>
+              <button className="btn btn-primary">Check All here!</button>
+            </Link>
           </div>
         </div>
       </div>
+
       <div
         onClick={() => handleCategoryClick("0")}
         className="hero lg:col-span-5 lg:row-start-2 bg-tiffany-blue"

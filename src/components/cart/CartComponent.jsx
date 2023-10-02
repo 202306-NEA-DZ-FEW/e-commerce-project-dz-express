@@ -15,28 +15,28 @@ import { db } from "@/util/firebase"
 const CartComponent = ({ products }) => {
   const [productsArray, setProductsArray] = useState(products)
   // const [quantity, setQuantity] = useState(1)
-  const [subtotal, setSubtotal] = useState(0);
-  const [taxes, setTaxes] = useState(0);
-  const [total, setTotal] = useState(0);
+  const [subtotal, setSubtotal] = useState(0)
+  const [taxes, setTaxes] = useState(0)
+  const [total, setTotal] = useState(0)
 
   useEffect(() => {
     // Calculate subtotal
     const newSubtotal = productsArray.reduce(
       (acc, item) => acc + item.data.product.price * item.data.quantity,
-      0
-    );
+      0,
+    )
 
     // Calculate taxes
-    const newTaxes = newSubtotal * 0.19;
+    const newTaxes = newSubtotal * 0.19
 
     // Calculate total
-    const newTotal = newSubtotal + newTaxes;
+    const newTotal = newSubtotal + newTaxes
 
     // Update state variables
-    setSubtotal(newSubtotal);
-    setTaxes(newTaxes);
-    setTotal(newTotal);
-  }, [productsArray]);
+    setSubtotal(newSubtotal)
+    setTaxes(newTaxes)
+    setTotal(newTotal)
+  }, [productsArray])
   const incrementQuantity = (quantity) => {
     quantity++
   }

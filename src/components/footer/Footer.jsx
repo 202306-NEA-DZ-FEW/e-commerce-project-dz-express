@@ -2,7 +2,7 @@ import Logo from "../Nav/Logo"
 import Link from "next/link"
 function Footer() {
   return (
-    <footer className="h-1/5 w-full mx-auto">
+    <footer className="h-1/5 w-full mx-auto mb-0">
       <div className="flex lg:flex-col flex-row bg-emerald-400 lg:justify-between justify-center">
         <div className="sb_footer section_padding p-10">
           <div className="flex justify-between items-start flex-row flex-wrap w-full text-left mb-8">
