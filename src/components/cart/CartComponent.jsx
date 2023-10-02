@@ -14,7 +14,7 @@ import { db } from "@/util/firebase"
 
 const CartComponent = ({ products }) => {
   const [productsArray, setProductsArray] = useState(products)
-  // const [quantity, setQuantity] = useState(1)
+  const [quantity, setQuantity] = useState(0)
   const [subtotal, setSubtotal] = useState(0)
   const [taxes, setTaxes] = useState(0)
   const [total, setTotal] = useState(0)
@@ -25,7 +25,6 @@ const CartComponent = ({ products }) => {
       (acc, item) => acc + item.data.product.price * item.data.quantity,
       0,
     )
-
     // Calculate taxes
     const newTaxes = newSubtotal * 0.19
 
@@ -69,6 +68,7 @@ const CartComponent = ({ products }) => {
     querySnapshot.forEach(async (document) => {
       await deleteDoc(doc(db, "cart", document.id))
     })
+    setProductsArray([])
   }
   return (
     <div className="bg-gray-100 h-screen py-8">
@@ -120,28 +120,30 @@ const CartComponent = ({ products }) => {
                           ${product.data.product.price.toFixed(2)}
                         </td>
                         <td className="py-4">
-                          <div className="flex items-center">
-                            <button
-                              onClick={() =>
-                                incrementQuantity(product.data.quantity)
-                              }
-                              className="border rounded-md py-2 px-4 mr-2"
-                            >
-                              -
-                            </button>
-                            <span className="text-center w-8">
-                              {product.data.quantity}
-                            </span>
-                            <button
-                              onClick={() =>
-                                incrementQuantity(product.data.quantity)
-                              }
-                              className="border rounded-md py-2 px-4 ml-2"
-                            >
-                              +
-                            </button>
-                          </div>
+                          <span className="text-center w-8">
+                            {product.data.quantity}
+                          </span>{" "}
                         </td>
+                        {/*  //   <div className="flex items-center">
+                        //     <button
+                        //       onClick={() =>
+                        //         decrementQuantity(product.data.quantity)
+                        //       }
+                        //       className="border rounded-md py-2 px-4 mr-2"
+                        //     >
+                        //       -
+                        //     </button>
+                        //     
+                        //     <button
+                        //       onClick={() =>
+                        //         incrementQuantity(product.data.quantity)
+                        //       }
+                        //       className="border rounded-md py-2 px-4 ml-2"
+                        //     >
+                        //       +
+                        //     </button>
+                        //   </div>
+                          // </td>*/}
                         <td>
                           $
                           {product.data.quantity *

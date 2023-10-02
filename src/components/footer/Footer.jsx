@@ -8,7 +8,7 @@ function Footer() {
           <div className="flex justify-between items-start flex-row flex-wrap w-full text-left mb-8">
             <div className="w-40 m-4 flex justify-start flex-col text-white">
               <Link href="/">
-                <button className="font-bold text-4xl tracking-wide md:hover:tracking-widest transform-all ease-in-out duration-500 font-mono text-black z-50 uppercase">
+                <button className="font-bold text-4xl tracking-wide md:hover:tracking-widest transform-all ease-in-out duration-500 font-mono text-black z-50">
                   <span className="text-white mb-5">Dz</span>Express
                   <span className="text-white mb-5">.</span>
                 </button>
