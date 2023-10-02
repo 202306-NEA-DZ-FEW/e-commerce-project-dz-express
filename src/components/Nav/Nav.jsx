@@ -5,20 +5,63 @@ import Link from "next/link"
 import Logo from "./Logo"
 import MobileMenu from "./MobileMenu"
 import { useCategory } from "@/context/CategoryContext"
+import { ALL_PRODUCTS } from "@/constants"
+import { API } from "@/util/API"
+import Image from "next/image"
 
-function Nav() {
+const Nav = () => {
   const { defaultCategory, setDefaultCategory } = useCategory()
   const [showInput, setShowInput] = useState(false)
   const inputRef = useRef()
+  const [searchList, setSearchList] = useState([])
+  const [searchInput, setSearchInput] = useState("")
+  const [products, setProducts] = useState([]) // Store all products
+
+  // Fetch all products when the component mounts
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const data = await API(ALL_PRODUCTS)
+        setProducts(data)
+      } catch (error) {
+        console.error("Error fetching products:", error)
+      }
+    }
+
+    fetchProducts()
+  }, [])
+
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase()
+    setSearchInput(query)
+
+    if (!query) {
+      setSearchList([]) // Clear the search results when the query is empty
+      return
+    }
+
+    const filtered = products
+      .filter((product) => product.title.toLowerCase().includes(query))
+      .slice(0, 4)
+    setSearchList(filtered)
+  }
+
   function handleToggleInput() {
     setShowInput((prevState) => !prevState)
   }
+
+  // Clear the search results when an item is clicked
+  const handleItemClick = () => {
+    setSearchList([])
+  }
+
   useEffect(() => {
     if (!showInput) return
     inputRef.current.focus()
   }, [showInput])
+
   return (
-    <navbar className="navbar mb-2  bg-gradient-to-b  sticky top-0 z-50 backdrop-blur-md">
+    <nav className="navbar mb-2 bg-gradient-to-b sticky top-0 z-50 backdrop-blur-md">
       <MobileMenu />
       <div
         onClick={() => setDefaultCategory("")}
@@ -41,17 +84,12 @@ function Nav() {
           >
             Products
           </Link>
-          <Link
-            href="/Categories"
-            className="btn btn-ghost btn-sm rounded-btn "
-          >
+          <Link href="/Categories" className="btn btn-ghost btn-sm rounded-btn">
             <div className="dropdown dropdown-hover">
-              <label tabIndex={0} className="">
-                categories
-              </label>
+              <label tabIndex={0}>categories</label>
               <ul
                 tabIndex={0}
-                className="dropdown-content z-[1] menu p-2 shadow bg-base-100  w-52  "
+                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 w-52"
               >
                 <li className="block p-4 border-spacing-1 hover:bg-slate-300">
                   MEN CLOTHING
@@ -72,28 +110,59 @@ function Nav() {
       </div>
       <div className="flex-1 justify-end">
         <div className="form-control">
-          <input
-            ref={inputRef}
-            type="text"
-            placeholder="Search"
-            className={`input input-ghost input-sm transition-all duration-300 ${
-              showInput ? "block" : "hidden"
-            }`}
-          />
+          <div className="relative flex flex-row gap-1 items-center bg-white rounded-lg p-2">
+            <input
+              ref={inputRef}
+              type="text"
+              placeholder="Search..."
+              className={`w-44 box-border px-4 py-[3px] rounded-lg bg-white input input-ghost input-sm transition-all duration-300 ${
+                showInput ? "block" : "hidden"
+              }`}
+              value={searchInput}
+              onChange={handleSearch}
+              style={{ color: "black" }}
+            />
+
+            <FiSearch
+              onClick={handleToggleInput}
+              className="text-2xl bg-white"
+            />
+
+            {searchList.length > 0 && (
+              <div className="absolute top-full w-96 right-0 bg-white rounded-lg">
+                <div className="flex flex-col gap-2">
+                  {searchList.map((product) => (
+                    <Link
+                      href={`/products/${product.id}`}
+                      key={product.id}
+                      className="flex flex-row justify-between items-center p-3  gap-2 hover:bg-white rounded-lg"
+                      onClick={() => setSearchList([])} // Clear search results when an item is clicked
+                    >
+                      <div className="flex flex-row gap-4">
+                        <Image
+                          src={product.image} // Replace with the actual image URL
+                          alt={product.title}
+                          width={500}
+                          height={500}
+                          className="w-16 rounded-lg"
+                        />
+                        <p className="text-lg font-semibold">{product.title}</p>
+                      </div>
+                      {/* You can add more information here */}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
-        <button
-          onClick={handleToggleInput}
-          className="btn btn-square btn-ghost "
-        >
-          <FiSearch className="text-2xl" />
-        </button>
-        <Link href={"/cart"}>
+        <Link href="/cart">
           <button className="btn btn-square btn-ghost">
             <PiShoppingCart className="text-2xl" />
           </button>
         </Link>
       </div>
-    </navbar>
+    </nav>
   )
 }
 
