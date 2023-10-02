@@ -4,6 +4,7 @@ import { ALL_PRODUCTS, CATEGORIES } from "@/constants"
 import { API } from "@/util/API"
 import Filter from "@/components/filter/Filter"
 import { useCategory } from "@/context/CategoryContext"
+import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth"
 
 const Products = ({ products, categories }) => {
   const [filteredData, setFilteredData] = useState(products) // Initialize with all products
@@ -44,6 +45,22 @@ const Products = ({ products, categories }) => {
     if (defaultCategory) {
       filterItemsByCategory(defaultCategory)
     }
+    const auth = getAuth()
+    signInAnonymously(auth).then(() => {
+      console.log(auth)
+    })
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/auth.user
+        const uid = user.uid
+        console.log("uid", uid)
+        // ...
+      } else {
+        // User is signed out
+        // ...
+      }
+    })
   }, [])
 
   return (
@@ -69,11 +86,6 @@ export default Products
 export async function getStaticProps() {
   const data = await API(ALL_PRODUCTS)
   const categories = await API(CATEGORIES)
-  // const updatedCategories = {
-  //   '4': 'All', // Add an "All" category option
-  //   ...categories,
-  // };
-
   return {
     props: {
       products: data,

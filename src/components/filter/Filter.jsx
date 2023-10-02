@@ -45,7 +45,7 @@ const Filter = ({
   return (
     <div className="flex flex-row justify-end">
       <div className="flex flex-col justify-end p-4">
-        <div class="flex flex-row justify-end">
+        <div className="flex flex-row justify-end">
           <button
             onClick={handleButtonClick}
             id="dropdownDefault"
