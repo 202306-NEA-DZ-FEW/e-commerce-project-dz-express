@@ -40,9 +40,9 @@ const Nav = () => {
       return
     }
 
-    const filtered = products.filter((product) =>
-      product.title.toLowerCase().includes(query),
-    )
+    const filtered = products
+      .filter((product) => product.title.toLowerCase().includes(query))
+      .slice(0, 4)
     setSearchList(filtered)
   }
 
@@ -110,17 +110,17 @@ const Nav = () => {
       </div>
       <div className="flex-1 justify-end">
         <div className="form-control">
-          <div className="relative flex flex-row gap-1 items-center bg-[#000000c2] rounded-lg ">
+          <div className="relative flex flex-row gap-1 items-center bg-white rounded-lg p-2">
             <input
               ref={inputRef}
               type="text"
               placeholder="Search..."
-              className={`w-44 box-border px-4 py-[3px] rounded-lg bg-[#000000c2] input input-ghost input-sm text-white transition-all duration-300 ${
+              className={`w-44 box-border px-4 py-[3px] rounded-lg bg-white input input-ghost input-sm transition-all duration-300 ${
                 showInput ? "block" : "hidden"
               }`}
               value={searchInput}
               onChange={handleSearch}
-              style={{ color: "white" }}
+              style={{ color: "black" }}
             />
 
             <FiSearch
@@ -129,13 +129,13 @@ const Nav = () => {
             />
 
             {searchList.length > 0 && (
-              <div className="absolute top-full w-96 right-0  bg-[#000000e3] rounded-lg">
+              <div className="absolute top-full w-96 right-0 bg-white rounded-lg">
                 <div className="flex flex-col gap-2">
                   {searchList.map((product) => (
                     <Link
                       href={`/products/${product.id}`}
                       key={product.id}
-                      className="flex flex-row justify-between items-center p-3  gap-2 hover:bg-black rounded-lg"
+                      className="flex flex-row justify-between items-center p-3  gap-2 hover:bg-white rounded-lg"
                       onClick={() => setSearchList([])} // Clear search results when an item is clicked
                     >
                       <div className="flex flex-row gap-4">
