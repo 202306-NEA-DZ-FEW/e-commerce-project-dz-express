@@ -4,6 +4,8 @@ import { API } from "@/util/API"
 import { React, useState } from "react"
 import { collection, addDoc } from "firebase/firestore"
 import { db } from "@/util/firebase"
+import Image from "next/image"
+
 const SingleProduct = ({ product }) => {
   const cartCollectionRef = collection(db, "cart")
   const { cart, setCart } = useCart()
@@ -30,10 +32,12 @@ const SingleProduct = ({ product }) => {
       <div className="container px-5 py-24 mx-auto">
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
           <div className="flex-1 px-4 h-[460px] rounded-lg bg-white mb-4">
-            <img
+            <Image
               className="w-full h-full object-scale-down"
               src={product.image}
               alt="Product Image"
+              height={500}
+              width={500}
             />
           </div>
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
