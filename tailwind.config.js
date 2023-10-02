@@ -5,6 +5,7 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: "class",
   theme: {
     extend: {
       backgroundImage: {
@@ -12,7 +13,24 @@ module.exports = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      backgroundColor: {
+        mint: "#49C5A0",
+        "tiffany-blue": "#91D9C0",
+        "mint-green": "#C9FCE8",
+        "mint-cream": "#DDFCF0",
+        zomp: "#55B194",
+      },
+      textColor: {
+        mint: "#49C5A0",
+        "tiffany-blue": "#91D9C0",
+        "mint-green": "#C9FCE8",
+        "mint-cream": "#DDFCF0",
+        zomp: "#55B194",
+      },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
+  daisyui: {
+    themes: ["emerald"],
+  },
 }
