@@ -4,6 +4,7 @@ import ProductCard from "@/components/ProductCard/ProductCard"
 import HeroGrid from "@/components/Hero Grid/HeroGrid"
 import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth"
 import { useEffect } from "react"
+import Link from "next/link"
 
 export default function Home({ categories, categoryObjects }) {
   useEffect(() => {
@@ -36,7 +37,9 @@ export default function Home({ categories, categoryObjects }) {
             <div className="grid grid-cols-3 gap-4">
               {categoryObj.products.map((product) => (
                 <div key={product.id} className="col-span-1">
-                  <ProductCard {...product} />
+                  <Link href={`/products/${product.id}`}>
+                    <ProductCard {...product} />
+                  </Link>
                 </div>
               ))}
             </div>

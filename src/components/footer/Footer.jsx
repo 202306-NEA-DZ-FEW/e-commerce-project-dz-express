@@ -130,7 +130,7 @@ function Footer() {
                 </svg>
 
                 <span className="sr-only">GitHub account</span>
-                <p>Samira TOUBAL</p>
+                <p>Samira TOUBAL SEGHIR</p>
               </Link>
             </div>
 
