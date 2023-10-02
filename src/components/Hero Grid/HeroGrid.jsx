@@ -3,6 +3,7 @@ import { API } from "@/util/API"
 import { CATEGORIES } from "@/constants"
 import Link from "next/link"
 import { useCategory } from "@/context/CategoryContext"
+import Image from "next/image"
 
 export default function HeroGrid(categories) {
   const { setDefaultCategory, defaultCategory } = useCategory()
@@ -29,6 +30,12 @@ export default function HeroGrid(categories) {
           {" "}
           <div className="hero-content text-center font-bold text-2xl font-mono text-black">
             {categories[0]}
+            <Image
+              src="/images/category_electronic.png"
+              alt="Placeholder Image"
+              width={200}
+              height={100}
+            />
           </div>
         </Link>{" "}
       </div>
@@ -39,6 +46,12 @@ export default function HeroGrid(categories) {
       >
         <Link href={`/products`}>
           <div className="hero-content text-center font-bold text-2xl font-mono text-black">
+            <Image
+              src="/images/category_jewelry.png"
+              alt="Placeholder Image"
+              width={200}
+              height={100}
+            />
             {categories[1]}
           </div>
         </Link>{" "}
@@ -50,6 +63,13 @@ export default function HeroGrid(categories) {
       >
         <Link href={`/products`}>
           <div className="hero-content text-center font-bold text-2xl font-mono text-black">
+            <Image
+              src="/images/category_men_clothing.png"
+              alt="Placeholder Image"
+              width={200}
+              height={100}
+            />
+
             {categories[2]}
           </div>
         </Link>{" "}
@@ -63,6 +83,13 @@ export default function HeroGrid(categories) {
           {" "}
           <div className="hero-content text-center font-bold text-2xl font-mono text-black">
             {categories[3]}
+
+            <Image
+              src="/images/category_women_clothes.png"
+              alt="Placeholder Image"
+              width={200}
+              height={200}
+            />
           </div>
         </Link>
       </div>
