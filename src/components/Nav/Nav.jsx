@@ -13,6 +13,7 @@ function Nav() {
   function handleToggleInput() {
     setShowInput((prevState) => !prevState)
   }
+
   useEffect(() => {
     if (!showInput) return
     inputRef.current.focus()
