@@ -73,7 +73,7 @@ export async function getStaticProps() {
   //   '4': 'All', // Add an "All" category option
   //   ...categories,
   // };
-  //  console.log('updatedCategories', updatedCategories)
+
   return {
     props: {
       products: data,

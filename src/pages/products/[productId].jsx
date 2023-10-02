@@ -1,6 +1,6 @@
 import { SINGLE_PRODUCT } from "@/constants"
 import { API } from "@/util/API"
-import React from "react"
+import { React, useState } from "react"
 
 const SingleProduct = ({ product }) => {
   const [quantity, setQuantity] = useState(1)
