@@ -16,7 +16,16 @@ const Nav = () => {
   const [searchList, setSearchList] = useState([])
   const [searchInput, setSearchInput] = useState("")
   const [products, setProducts] = useState([]) // Store all products
+  const categories = [
+    "electronics",
+    "jewelery",
+    "men's clothing",
+    "women's clothing",
+  ]
 
+  const handleCategoryClick = (categoryKey) => {
+    setDefaultCategory(categories[categoryKey])
+  }
   // Fetch all products when the component mounts
   useEffect(() => {
     async function fetchProducts() {
@@ -84,28 +93,47 @@ const Nav = () => {
           >
             Products
           </Link>
-          <Link href="/Categories" className="btn btn-ghost btn-sm rounded-btn">
-            <div className="dropdown dropdown-hover">
-              <label tabIndex={0}>categories</label>
-              <ul
-                tabIndex={0}
-                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 w-52"
-              >
-                <li className="block p-4 border-spacing-1 hover:bg-slate-300">
-                  MEN CLOTHING
+          <div className="dropdown dropdown-hover">
+            <label tabIndex={0}>categories</label>
+
+            <ul
+              tabIndex={0}
+              className="dropdown-content z-[1] menu p-2 shadow bg-base-100 w-52"
+            >
+              <Link href={`/products`}>
+                <li
+                  onClick={() => setDefaultCategory(categories[0])}
+                  className="block p-4 border-spacing-1 hover:bg-slate-300"
+                >
+                  {categories[0]}
                 </li>
-                <li className="block p-4 border-spacing-1 hover:bg-slate-300">
-                  WOMEN CLOTHING
+              </Link>
+              <Link href={`/products`}>
+                <li
+                  onClick={() => setDefaultCategory(categories[1])}
+                  className="block p-4 border-spacing-1 hover:bg-slate-300"
+                >
+                  {categories[1]}
                 </li>
-                <li className="block p-4 border-spacing-1 hover:bg-slate-300">
-                  ELECTRONICS
+              </Link>
+              <Link href={`/products`}>
+                <li
+                  onClick={() => setDefaultCategory(categories[2])}
+                  className="block p-4 border-spacing-1 hover:bg-slate-300"
+                >
+                  {categories[2]}
                 </li>
-                <li className="block p-4 border-spacing-1 hover:bg-slate-300">
-                  JEWELRY
+              </Link>
+              <Link href={`/products`}>
+                <li
+                  onClick={() => setDefaultCategory(categories[3])}
+                  className="block p-4 border-spacing-1 hover:bg-slate-300"
+                >
+                  {categories[3]}
                 </li>
-              </ul>
-            </div>
-          </Link>
+              </Link>
+            </ul>
+          </div>
         </div>
       </div>
       <div className="flex-1 justify-end">
