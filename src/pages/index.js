@@ -2,8 +2,27 @@ import { API } from "@/util/API"
 import { ALL_PRODUCTS, CATEGORIES, SINGLE_PRODUCT } from "@/constants"
 import ProductCard from "@/components/ProductCard/ProductCard"
 import HeroGrid from "@/components/Hero Grid/HeroGrid"
+import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth"
+import { useEffect } from "react"
 
 export default function Home({ categories, categoryObjects }) {
+  useEffect(() => {
+    const auth = getAuth()
+    signInAnonymously(auth)
+      .then(() => {
+        console.log("hey")
+      })
+      .catch((error) => {
+        console.error("Anonymous sign-in error:", error)
+      })
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in
+        console.log("user", user.uid)
+      } else {
+      }
+    })
+  }, [])
   return (
     <main className="flex flex-col justify-center items-center min-h-screen">
       <HeroGrid {...categories} />
