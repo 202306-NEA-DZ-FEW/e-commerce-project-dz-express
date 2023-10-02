@@ -1,6 +1,7 @@
 import { SINGLE_PRODUCT } from "@/constants"
 import { useCart } from "@/context/CartContext"
 import { API } from "@/util/API"
+import { React, useState } from "react"
 import React from "react"
 import { useState } from "react"
 import { collection, addDoc } from "firebase/firestore"
