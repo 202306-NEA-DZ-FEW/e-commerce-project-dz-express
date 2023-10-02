@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from "react"
 import Image from "next/image"
 import { useCart } from "@/context/CartContext"
-import { collection, addDoc } from "firebase/firestore"
+import {
+  collection,
+  addDoc,
+  doc,
+  deleteDoc,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore"
 import { db } from "@/util/firebase"
 
 const CartComponent = ({ products }) => {
   const [productsArray, setProductsArray] = useState(products)
-  const [quantity, setQuantity] = useState(1)
+  // const [quantity, setQuantity] = useState(1)
   const subtotal = products.reduce(
     (acc, item) => acc + item.data.product.price * item.data.quantity,
     0,
@@ -15,13 +23,13 @@ const CartComponent = ({ products }) => {
   const total = subtotal + taxes
   useEffect(() => {}, [products])
 
-  const incrementQuantity = () => {
-    setQuantity(quantity + 1)
+  const incrementQuantity = (quantity) => {
+    quantity++
   }
 
-  const decrementQuantity = () => {
+  const decrementQuantity = (quantity) => {
     if (quantity > 1) {
-      setQuantity(quantity - 1)
+      quantity--
     }
   }
   const removeCartItem = (id) => {
@@ -32,16 +40,21 @@ const CartComponent = ({ products }) => {
     setProductsArray(updatedProducts)
   }
 
-  const handleDeleteCartItem = () => {
-    db.collection("cart")
-      .doc(cartItemId)
-      .delete()
-      .then(() => {
-        console.log("Cart item deleted successfully.")
-      })
-      .catch((error) => {
-        console.error("Error deleting cart item:", error)
-      })
+  const handleDeleteCartItem = async (id) => {
+    console.log("id", id)
+    const q = query(collection(db, "cart"), where("product.id", "==", id))
+    const querySnapshot = await getDocs(q)
+    querySnapshot.forEach(async (document) => {
+      // Use deleteDoc correctly with the db object, collection name, and document ID
+      await deleteDoc(doc(db, "cart", document.id))
+    })
+  }
+
+  const handleCheckout = async () => {
+    const querySnapshot = await getDocs(collection(db, "cart"))
+    querySnapshot.forEach(async (document) => {
+      await deleteDoc(doc(db, "cart", document.id))
+    })
   }
   return (
     <div className="bg-gray-100 h-screen py-8">
@@ -61,9 +74,10 @@ const CartComponent = ({ products }) => {
                         <th className="text-left font-semibold">Total</th>
                         <th>
                           <button
-                            onClick={() =>
+                            onClick={() => {
+                              handleDeleteCartItem(product.data.product.id)
                               removeCartItem(product.data.product.id)
-                            }
+                            }}
                             className="text-black-500 p-2 text-bold"
                           >
                             X
@@ -94,7 +108,9 @@ const CartComponent = ({ products }) => {
                         <td className="py-4">
                           <div className="flex items-center">
                             <button
-                              onClick={decrementQuantity}
+                              onClick={() =>
+                                incrementQuantity(product.data.quantity)
+                              }
                               className="border rounded-md py-2 px-4 mr-2"
                             >
                               -
@@ -103,7 +119,9 @@ const CartComponent = ({ products }) => {
                               {product.data.quantity}
                             </span>
                             <button
-                              onClick={incrementQuantity}
+                              onClick={() =>
+                                incrementQuantity(product.data.quantity)
+                              }
                               className="border rounded-md py-2 px-4 ml-2"
                             >
                               +
@@ -143,7 +161,7 @@ const CartComponent = ({ products }) => {
                 <span className="font-semibold">${total.toFixed(2)}</span>
               </div>
               <button
-                // onClick={addCart}
+                onClick={handleCheckout}
                 className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full"
               >
                 Checkout
