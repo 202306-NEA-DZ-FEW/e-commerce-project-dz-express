@@ -93,9 +93,8 @@ const Nav = () => {
           >
             Products
           </Link>
-          <div className="dropdown dropdown-hover btn btn-ghost btn-sm rounded-btn">
-            <label tabIndex={0}>categories</label>
-
+          <div className="dropdown dropdown-hover">
+          <div className="btn btn-ghost btn-sm rounded-btn">categories</div> 
             <ul
               tabIndex={0}
               className="dropdown-content z-[1] menu p-2 shadow bg-base-100 w-52"
