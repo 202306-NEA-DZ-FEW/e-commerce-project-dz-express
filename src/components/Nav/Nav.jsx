@@ -93,7 +93,7 @@ const Nav = () => {
           >
             Products
           </Link>
-          <div className="dropdown dropdown-hover">
+          <div className="dropdown dropdown-hover btn btn-ghost btn-sm rounded-btn">
             <label tabIndex={0}>categories</label>
 
             <ul
